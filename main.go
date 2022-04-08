@@ -32,6 +32,7 @@ func main() {
 	router.POST("/albums", postAlbums)
 
 	router.GET("/albums/:a/:b", addition)
+	router.POST("/albums/sub", substraction)
 	router.Run("localhost:8080")
 
 }
@@ -77,9 +78,23 @@ func addition(c *gin.Context) {
 
 		log.Println(err)
 	}
-	//a := c.Param("strconv.Atoi(a)")
-	//b := c.Param("strconv.Atoi(b)")
 	sum := a + b
 	fmt.Println(sum)
 	c.JSON(http.StatusOK, sum)
+}
+func substraction(c *gin.Context) {
+
+	a, err := strconv.Atoi(c.Query("a"))
+	if err != nil {
+
+		log.Println(err)
+	}
+	b, err := strconv.Atoi(c.Query("b"))
+	if err != nil {
+
+		log.Println(err)
+	}
+	sub := a - b
+	c.JSON(http.StatusOK, sub)
+
 }
