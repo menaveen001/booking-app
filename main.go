@@ -1,7 +1,10 @@
 package main
 
 import (
+	"fmt"
+	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -24,9 +27,11 @@ func main() {
 
 	router := gin.Default()
 	router.GET("/albums", getAlbums)
-	router.GET("/albums/:ID", getAlbumByID)
+	//router.GET("/albums/:ID", getAlbumByID)
 
 	router.POST("/albums", postAlbums)
+
+	router.GET("/albums/:a/:b", addition)
 	router.Run("localhost:8080")
 
 }
@@ -56,4 +61,25 @@ func getAlbumByID(c *gin.Context) {
 		}
 	}
 	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
+}
+
+func addition(c *gin.Context) {
+
+	a, err := strconv.Atoi(c.Param("a"))
+	if err != nil {
+
+		log.Println(err)
+	}
+
+	b, err := strconv.Atoi(c.Param("b"))
+
+	if err != nil {
+
+		log.Println(err)
+	}
+	//a := c.Param("strconv.Atoi(a)")
+	//b := c.Param("strconv.Atoi(b)")
+	sum := a + b
+	fmt.Println(sum)
+	c.JSON(http.StatusOK, sum)
 }
