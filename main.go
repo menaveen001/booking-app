@@ -33,6 +33,10 @@ func main() {
 
 	router.GET("/albums/:a/:b", addition)
 	router.POST("/albums/sub", substraction)
+	router.POST("/albums/multi", multipication)
+	router.POST("/albums/divid", devision)
+
+	router.POST("/albums/all", substraction, multipication, devision)
 	router.Run("localhost:8080")
 
 }
@@ -96,5 +100,31 @@ func substraction(c *gin.Context) {
 	}
 	sub := a - b
 	c.JSON(http.StatusOK, sub)
+
+}
+func multipication(c *gin.Context) {
+	a, err := strconv.Atoi(c.Query("a"))
+	if err != nil {
+		log.Println(err)
+	}
+	b, err := strconv.Atoi(c.Query("b"))
+	if err != nil {
+		log.Println(err)
+	}
+	multi := a * b
+	c.JSON(http.StatusOK, multi)
+
+}
+func devision(c *gin.Context) {
+	a, err := strconv.Atoi(c.Query("a"))
+	if err != nil {
+		log.Println(err)
+	}
+	b, err := strconv.Atoi(c.Query("b"))
+	if err != nil {
+		log.Println(err)
+	}
+	divid := float64(a) / float64(b)
+	c.JSON(http.StatusOK, divid)
 
 }
